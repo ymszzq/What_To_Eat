@@ -17,8 +17,9 @@ class mainFood extends Component {
   }
 
   componentDidMount() {
+
     todosRef.on("value",snapshot=>{
- 
+      this.database = [];
       let result = snapshot.val();
 
       Object.keys(result).map((k,i)=>this.database.push(result[k]));
@@ -31,6 +32,7 @@ class mainFood extends Component {
   listAllOnClick(){
     let temp = [...this.database];
     this.setState({fields: temp});
+    // this.setState({fields: []});
     console.log("test");
   }
 
