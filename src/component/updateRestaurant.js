@@ -11,7 +11,13 @@ export default class updateRestaurant extends Component {
         night: "off",
         janpanestKorean: "off",
         western: "off",
-        other: "off",}
+        other: "off",
+        region_bby:"off",
+        region_rmd:"off",
+        region_coq:"off",
+        region_dt:"off",
+        region_other:"off",
+    }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleValidation = this.handleValidation.bind(this);
@@ -22,7 +28,6 @@ export default class updateRestaurant extends Component {
   }
   handleValidation(){
     let fields = this.state;
-    let errors = {};
     let formIsValid = true;
 
     //Name
@@ -35,17 +40,36 @@ export default class updateRestaurant extends Component {
        formIsValid = false;
     }
 
-    if(!fields["rate"]){
+    if(!fields["rate"] ){
         formIsValid = false;
     }
+    
+    if(fields["region_bby"] === "off" && fields["region_rmd"] === "off" && fields["region_coq"] === "off" && fields["region_dt"] === "off" && fields["region_other"] === "off" )
+        formIsValid = false;
 
    return formIsValid;
 }
   handleSubmit() {
-    console.log(this.state)
+
     if(this.handleValidation()){
-        alert("Successful");
-        todosRef.push().set(this.state);}
+
+        todosRef.push().set(this.state);
+        this.setState({spicy: "off",
+        nonSpicy: "off",
+        bbqHotPot: "off",
+        night: "off",
+        janpanestKorean: "off",
+        western: "off",
+        other: "off",
+        region_bby:"off",
+        region_rmd:"off",
+        region_coq:"off",
+        region_dt:"off",
+        region_other:"off",
+    });
+    document.getElementById("formID").reset();
+    alert("Successful");
+      }
     else
         alert("Field cannot be empty");
     
@@ -54,10 +78,10 @@ export default class updateRestaurant extends Component {
   render() {
     return (
       <div>
-        <Form >
+        <Form ref = "form" id = "formID">
           <Form.Group as={Row} controlId="formHorizontalEmail">
             <Form.Label column sm={2}>
-              餐厅名字
+              餐厅名字*
             </Form.Label>
             <Col sm={10}>
               <Form.Control
@@ -82,9 +106,62 @@ export default class updateRestaurant extends Component {
               />
             </Col>
           </Form.Group>
+          <Form.Group as={Row}>
+              <Form.Label as="legend" column sm={2}>
+                餐厅地区*
+              </Form.Label>
+
+              <Col sm={10}>
+                <Form.Check
+                  name="region_bby"
+                  custom
+                  inline
+                  label="BBY"
+                  type={"checkbox"}
+                  id={`region_bby`}
+                  onChange={this.handleChange}
+                />
+                <Form.Check
+                  name="region_rmd"
+                  custom
+                  inline
+                  label="RMD"
+                  type={"checkbox"}
+                  id={`region_rmd`}
+                  onChange={this.handleChange}
+                />
+                <Form.Check
+                  name="region_coq"
+                  custom
+                  inline
+                  label="COQ"
+                  type={"checkbox"}
+                  id={`region_coq`}
+                  onChange={this.handleChange}
+                />
+                <Form.Check
+                  name="region_dt"
+                  custom
+                  inline
+                  label="DT"
+                  type={"checkbox"}
+                  id={`region_dt`}
+                  onChange={this.handleChange}
+                />
+                <Form.Check
+                  name="region_other"
+                  custom
+                  inline
+                  label="Other"
+                  type={"checkbox"}
+                  id={`region_other`}
+                  onChange={this.handleChange}
+                />
+              </Col>
+            </Form.Group>
           <Form.Group as={Row} controlId="formHorizontalPassword">
             <Form.Label column sm={2}>
-              餐厅评级
+              餐厅评级*
             </Form.Label>
             <Col>
               <Form.Check
@@ -134,10 +211,11 @@ export default class updateRestaurant extends Component {
               />
             </Col>
           </Form.Group>
+          
           <fieldset>
             <Form.Group as={Row}>
               <Form.Label as="legend" column sm={2}>
-                餐厅类型
+                餐厅类型*
               </Form.Label>
 
               <Col sm={10}>
@@ -207,7 +285,19 @@ export default class updateRestaurant extends Component {
               </Col>
             </Form.Group>
           </fieldset>
-
+          <Form.Group as={Row} controlId="formHorizontalEmail">
+            <Form.Label column sm={2}>
+            贡献人
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                name="contributer"
+                type="text"
+                placeholder="贡献人（你的名字）"
+                onChange={this.handleChange}
+              />
+            </Col>
+          </Form.Group>
           <Form.Group as={Row}>
             <Col sm={{ span: 10, offset: 2 }}>
               <Button  onClick={this.handleSubmit}>添加</Button>
